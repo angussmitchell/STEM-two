@@ -16,9 +16,11 @@ Farmhand::Farmhand(void){
 
 
     GPSMessageHeader =  ">FH,1,2,";
-    CamAprilHeader = ">FH,1,4,";
+    CamAprilAngle = ">FH,1,4,";
     CamOdomHeader = ">FH,1,5,";
     CamColourHeader = ">FH,1,6,";
+    CamAprilID = ">FH,1,7,";
+
 }
 
 void Farmhand::initFarmhand(int port = 2 , long baud = 115200){
@@ -256,6 +258,7 @@ void Farmhand::getAngRatePWM(int angRate){
 
 int Farmhand::readData(void)
 {
+	
     char buffer[50];    
     String Buffer;
     int buffer_length;
@@ -270,7 +273,8 @@ int Farmhand::readData(void)
         break;
         case 2:
         if (Serial2.available()){Buffer = Serial2.readStringUntil(';');}
-        break;
+        
+	break;
         case 3:
         if (Serial3.available()){Buffer = Serial3.readStringUntil(';');}
         break;
@@ -291,15 +295,19 @@ int Farmhand::readData(void)
 }
 
 int Farmhand::ProcessDataStream(String Buffer)
-{
+{	
 
-    if (Buffer.substring(GPSMessageHeader.c_str()))
+    if (Buffer.startsWith(GPSMessageHeader.c_str()))
     {
         ProcessGPS(Buffer);
     }
-    else if (Buffer.substring(CamAprilHeader.c_str()))
+    else if (Buffer.startsWith(CamAprilAngle.c_str()))
     {
-        ProcessApril(Buffer);
+        ProcessAprilAngle(Buffer);
+    }
+    else if (Buffer.startsWith(CamAprilID.c_str()))
+    {
+	ProcessAprilID(Buffer);
     }
     return 0;
 }
@@ -320,17 +328,26 @@ int Farmhand::ProcessGPS(String Buffer)
     return 0;
 }
 
-int Farmhand::ProcessApril(String Buffer)
+int Farmhand::ProcessAprilAngle(String Buffer)
 {   
 
-    int StartIndex = Buffer.indexOf(CamAprilHeader.c_str()) + strlen(CamAprilHeader.c_str());
+    int StartIndex = Buffer.indexOf(CamAprilAngle.c_str()) + strlen(CamAprilAngle.c_str());
     int EndIndex = Buffer.indexOf(";", StartIndex);
     String AprilStr = Buffer.substring(StartIndex, EndIndex);
 
-    AprilAngle = atof(AprilStr.c_str());
+    AprilAngle = atoi(AprilStr.c_str());
     return 0;
 }
 
+int Farmhand::ProcessAprilID(String Buffer)
+{   
 
+    int StartIndex = Buffer.indexOf(CamAprilID.c_str()) + strlen(CamAprilID.c_str());
+    int EndIndex = Buffer.indexOf(";", StartIndex);
+    String AprilStr = Buffer.substring(StartIndex, EndIndex);
+
+    AprilID = atoi(AprilStr.c_str());
+    return 0;
+}
 
 Farmhand::~Farmhand(void){}

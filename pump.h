@@ -23,8 +23,6 @@ class pump
 	
 	void setSpeed(int speed);
 
-	int _port;
-
 };
 
 #endif

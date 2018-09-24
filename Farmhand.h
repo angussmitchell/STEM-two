@@ -29,11 +29,14 @@ class Farmhand
         ~Farmhand(void);
 	
         double latitude, longitude;
-        float AprilAngle;
+        int AprilAngle;
+	int AprilID;
+
         String GPSMessageHeader;
-        String CamAprilHeader;
+        String CamAprilAngle;
         String CamOdomHeader;
         String CamColourHeader;
+	String CamAprilID;
 
         void drive(int,int);
         void sprayOn(void);
@@ -45,8 +48,9 @@ class Farmhand
         int readData(void);
         int ProcessDataStream(String Buffer);
         int ProcessGPS(String Buffer);
-        int ProcessApril(String Buffer);
-	
+        int ProcessAprilAngle(String Buffer);
+	int ProcessAprilID(String Buffer);
+		
 
 };
 
