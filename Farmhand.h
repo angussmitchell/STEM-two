@@ -31,6 +31,7 @@ class Farmhand
         double latitude, longitude;
         int AprilAngle;
 	int AprilID;
+	unsigned long AprilTime;
 
         String GPSMessageHeader;
         String CamAprilAngle;
@@ -50,6 +51,7 @@ class Farmhand
         int ProcessGPS(String Buffer);
         int ProcessAprilAngle(String Buffer);
 	int ProcessAprilID(String Buffer);
+	bool TagAvailable(void);
 		
 
 };

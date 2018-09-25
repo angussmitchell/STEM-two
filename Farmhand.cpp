@@ -12,6 +12,8 @@ Farmhand::Farmhand(void){
     longitude      = 0;
 
     AprilAngle     = 0;
+    AprilID 	   = 0;
+    AprilTime      = 0;
 
 
 
@@ -336,6 +338,7 @@ int Farmhand::ProcessAprilAngle(String Buffer)
     String AprilStr = Buffer.substring(StartIndex, EndIndex);
 
     AprilAngle = atoi(AprilStr.c_str());
+    AprilTime  = millis();
     return 0;
 }
 
@@ -347,7 +350,21 @@ int Farmhand::ProcessAprilID(String Buffer)
     String AprilStr = Buffer.substring(StartIndex, EndIndex);
 
     AprilID = atoi(AprilStr.c_str());
+    AprilTime  = millis();
     return 0;
+}
+
+bool Farmhand::TagAvailable()
+{
+	unsigned long current_time = millis();
+	if ((current_time - AprilTime) > 100)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
 Farmhand::~Farmhand(void){}
