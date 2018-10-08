@@ -17,11 +17,13 @@ class spray
         					// Dimensions Engineering    
     
     public:    
-        spray(int relay_pin = 8);
+        spray(void);
         ~spray(void);
         
         void turnOn (void);
-	void turnOff (void);             
+	void turnOff (void);
+        void intialise(int relay_pin = 8);
+             
     protected:    	
 
 };
