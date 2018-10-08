@@ -1,8 +1,9 @@
-#ifndef spray_h
-#define spray_h
+#ifndef PulseRelay_h
+#define PulseRelay_h
 
+#include<Servo.h>
 #include <Arduino.h>
-#include <Servo.h>
+
 
 #define PULSE_RELAY_ON_PWM  160
 #define PULSE_RELAY_OFF_PWM  40
@@ -16,12 +17,11 @@ class spray
         					// Dimensions Engineering    
     
     public:    
-        spray(void);
+        spray(int relay_pin = 8);
         ~spray(void);
         
-        void turnOn (bool state);
-        void initialise(int relay_pin = 8);
-             
+        void turnOn (void);
+	void turnOff (void);             
     protected:    	
 
 };
