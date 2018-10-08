@@ -6,3 +6,4 @@
 #include <Farmhand.h>
 #include <moistureSensor.h>
 #include <pump.h>
+#include <spray.h>
