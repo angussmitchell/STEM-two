@@ -140,7 +140,6 @@ int Farmhand::ProcessLonGPS(String Buffer)
 	
     
     long tmp_lon = atol(LonString.c_str());
-   
     longitude = tmp_lon/(double)1000000;
 
     
