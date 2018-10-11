@@ -260,7 +260,7 @@ double MeCompass::getAngle(void)
   }
   else
   {
-    compass_angle = atan2( (double)cy, (double)cx );
+    compass_angle = atan2( (double)cy, (double)cx ); 
   }  
 
   if(compass_angle < 0)

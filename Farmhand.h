@@ -33,25 +33,31 @@ class Farmhand
 	int AprilID;
 	unsigned long AprilTime;
 
-        String GPSMessageHeader;
+        String GPSLatMessageHeader;
+	String GPSLonMessageHeader;
         String CamAprilAngle;
         String CamOdomHeader;
         String CamColourHeader;
 	String CamAprilID;
 
         void drive(int,int);
-        void sprayOn(void);
-        void sprayOff(void);
         void moveArm(int height);
         void getThrottlePWM(int throttle);
         void getAngRatePWM(int angRate);
-        void initFarmhand(int port , long baud);
-        int readData(void);
+        void initialise(long baud = 115200);
+        void readData(void);
         int ProcessDataStream(String Buffer);
-        int ProcessGPS(String Buffer);
+        int ProcessLatGPS(String Buffer);
+	int ProcessLonGPS(String Buffer);
         int ProcessAprilAngle(String Buffer);
 	int ProcessAprilID(String Buffer);
-	bool TagAvailable(void);
+	bool tagAvailable(void);
+
+	double getLat(void);
+	double getLon(void);
+
+
+	
 		
 
 };
