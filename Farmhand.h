@@ -51,7 +51,7 @@ class Farmhand
 	int ProcessLonGPS(String Buffer);
         int ProcessAprilAngle(String Buffer);
 	int ProcessAprilID(String Buffer);
-	bool tagAvailable(void);
+	bool TagAvailable(void);
 
 	double getLat(void);
 	double getLon(void);

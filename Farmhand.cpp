@@ -30,7 +30,8 @@ void Farmhand::initialise(long baud){
     Serial.println("Initialising bluetooth connection to Farmhand Robot");
     serialport_ = 2;		// previously this was provided as argument, but its confusing for students
     serialbaud_ = baud;
-    Serial2.begin(serialbaud_);
+    Serial2.begin(serialbaud_);  
+    Serial2.flush();
 	return;
     
 }
@@ -54,6 +55,8 @@ void Farmhand::drive(int throttle, int angRate)
 	Serial2.print(","); 
 	Serial2.print(angRate_);
 	Serial2.print(";");
+
+
        
     
 }
@@ -81,7 +84,6 @@ void Farmhand::readData(void)
 	char buffer[50];    
 	String Buffer;
 	int buffer_length;
-
 
 	if (Serial2.available()){Buffer = Serial2.readStringUntil(';');}
 
@@ -126,7 +128,7 @@ int Farmhand::ProcessLatGPS(String Buffer)
     String LatString = Buffer.substring(StartIndex, EndIndex);
     
     long tmp_lat = atol(LatString.c_str());
-    latitude = tmp_lat/(double)1000000;
+    latitude = tmp_lat/(double)10000000;
     
     return 0;
 }
@@ -140,7 +142,7 @@ int Farmhand::ProcessLonGPS(String Buffer)
 	
     
     long tmp_lon = atol(LonString.c_str());
-    longitude = tmp_lon/(double)1000000;
+    longitude = -tmp_lon/(double)10000000;
 
     
     return 0;
@@ -170,10 +172,10 @@ int Farmhand::ProcessAprilID(String Buffer)
     return 0;
 }
 
-bool Farmhand::tagAvailable()
+bool Farmhand::TagAvailable()
 {
 	unsigned long current_time = millis();
-	if ((current_time - AprilTime) > 100)
+	if ((current_time - AprilTime) > 200)
 	{
 		return 0;
 	}
@@ -181,6 +183,7 @@ bool Farmhand::tagAvailable()
 	{
 		return 1;
 	}
+	
 }
 
 double Farmhand::getLat()

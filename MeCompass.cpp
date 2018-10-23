@@ -260,6 +260,10 @@ double MeCompass::getAngle(void)
   }
   else
   {
+    int16_t head_X, head_Y, head_Z;
+    head_X = getHeadingX();
+    head_Y = getHeadingY();
+    head_Z = getHeadingZ();
     compass_angle = atan2( (double)cy, (double)cx ); 
   }  
 
